@@ -1,0 +1,30 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a word: ");
+        String word = scanner.nextLine().toLowerCase();
+        scanner.close();
+
+        HashMap<Character, Double> letterCount = new HashMap<>();
+
+        // Count occurrences of each letter
+        for (char c : word.toCharArray()) {
+            if (Character.isLetter(c)) {  // Check if character is a letter
+                letterCount.put(c, letterCount.getOrDefault(c, (double) 0) + 1);
+            }
+        }
+
+        // Count how many letters are repeated
+        int repeatingLetterCount = 0;
+        for (Double count : letterCount.values()) {
+            if (count > 1) {
+                repeatingLetterCount++;
+            }
+        }
+
+        System.out.println("Number of repeating letters: " + repeatingLetterCount);
+    }
+}

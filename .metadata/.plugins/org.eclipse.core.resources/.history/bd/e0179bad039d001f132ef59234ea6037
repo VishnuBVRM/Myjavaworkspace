@@ -1,0 +1,67 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+
+public class GetAllEmployeeByMobile {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		String driver, url, user, password;
+		
+		driver = "com.mysql.cj.jdbc.Driver";
+		url = "jdbc:mysql://localhost:3306/emp12634";
+		user = "root";
+		password = "Root";
+		
+		String insertQuery = "insert into employee values(?, ?,?,?,?)";
+		
+		Scanner in = new Scanner(System.in);
+		System.out.println("Please enter id: ");
+		int id = in.nextInt();
+		
+		System.out.println("Please enter name: ");
+		String name = in.next();
+		
+		System.out.println("Please enter email: ");
+		String email = in.next();
+		
+		System.out.println("Please enter mobile: ");
+		long mobile = in.nextLong();
+		
+		System.out.println("Please enter salary: ");
+		Double salary = in.nextDouble();
+		
+		
+		
+		
+		//1. Loading driver
+		//Class.forName(driver);
+		
+		//2. Establish connection
+		Connection con = DriverManager.getConnection(url, user, password);
+		
+		//3. Create  Prepared statement object
+		PreparedStatement st = con.prepareStatement(selectQuery);
+		st.setString(1,name);
+		
+		//4. Process Query (SELECT)
+		ResultSet rs = st.executeQuery();
+		if(rs.next()) {
+			System.out.println(rs.getInt("id"));
+			System.out.println(rs.getString("name"));
+			System.out.println(rs.getString("email"));
+			System.out.println(rs.getLong("mobile"));
+			System.out.println(rs.getDouble("salary"));
+			System.out.println("--------------------------");
+		}else {
+			System.out.println("no Email found");
+		}
+		
+		//5. Close Resources
+		rs.close();
+		st.close();
+		con.close();
+		}
+}
